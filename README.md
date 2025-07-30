@@ -1,96 +1,81 @@
-🕹️ Spec Deck – Left Controller
-Modular Gamepad | 3D Models + PCB + Firmware
+# 🕹️ Spec Deck – Left Controller  
+**Modular Gamepad | 3D Models + PCB + Firmware**
 
-This folder contains all the files for the Left Controller of the Spec Deck modular handheld, including:
+This folder contains all the files for the **Left Controller** of the Spec Deck modular handheld, including:
 
-🧩 3D-printable case and button files
+- 🧩 3D-printable case and button files  
+- 📐 PCB schematic, layout, and BOM  
+- 🔧 ESP32-S3 firmware source code under `Firmware/`
 
-📐 PCB schematic, layout, and BOM
+---
 
-🔧 ESP32-S3 firmware located under main/
+## 📦 Folder Structure
 
-📦 Folder Structure
-/3D Files/
+### `/3D Files/`  
 Printable case parts:
 
+- `shell_top.stl` – Top enclosure shell  
+- `shell_bottom.stl` – Bottom shell with grip  
+- `dpad.stl` – Directional pad  
+- `trigger_l1.stl`, `trigger_l2.stl` – Shoulder and trigger parts  
+- `mount_frame.step` – Internal frame for PCB and battery
 
-Optimized for FDM printing (PLA/PETG, 0.2 mm layer height, 0.15 mm tolerances).
+Optimized for FDM 3D printing (PLA or PETG, 0.15–0.2 mm layers, tuned for ~0.2 mm tolerances).
 
-/PCB Files/
-Hardware design files:
+---
 
+### `/PCB Files/`  
+All files needed to fabricate the Left Controller PCB:
 
-The PCB includes:
-
-ESP32-S3 module
-
-USB-C data and charging
-
-BQ25302 charger
-
-Hall-effect triggers
-
-JST battery input
-
-Support for RGB LEDs and rumble
-
-/Firmware/
-Firmware source code for the ESP32-S3.
+- `left_controller.kicad_pro` – KiCad project file  
+- `left_controller.sch` – Electrical schematic  
+- `left_controller.kicad_pcb` – Board layout  
+- `gerbers/` – Ready-to-upload Gerber files  
+- `bom.csv` – Bill of materials with manufacturer part numbers  
+- `pick_and_place.csv` – For automated SMT assembly
 
 Includes:
 
-BLE + USB HID support
+- ESP32-S3 microcontroller  
+- USB-C for data + charging  
+- BQ25302 charger (1 A max input)  
+- JST battery connector  
+- Support for rumble, hall triggers, and RGB LEDs
 
-Dock detection and auto pairing
+---
 
-Battery monitoring and charging control
+### `/Firmware/`  
+Firmware source code (ESP-IDF based):
 
-RGB LED and rumble motor support
+- BLE + USB HID input  
+- Dock detection and auto-sync  
+- Rumble motor and RGB LED control  
+- Battery monitoring and charging feedback  
+- Configurable inputs (D-Pad, triggers, shoulder buttons)
 
-🔧 Flashing Instructions
-You can flash the firmware in two ways:
+---
 
-Option 1: Using ESP-IDF (Developer Mode)
-Make sure you have ESP-IDF v5.x installed.
-Run the following:
+## 🔧 Flashing Instructions
 
-bash
-Copy
-Edit
+You can flash the controller firmware using:
+
+### ✅ Option 1: Spec Deck Companion App (Recommended)  
+Use the flashing window in the Companion App for easy updates:
+
+1. Connect the Left Controller via USB-C  
+2. Open the **Spec Deck Companion App**  
+3. Navigate to **Firmware > Flash Left Controller**  
+4. Choose from available firmware versions (via GitHub) or upload your own `.bin`  
+5. Click **Flash** — logs and success confirmation will be displayed
+
+This method is safest and simplest for most users.
+
+---
+
+### 🧪 Option 2: Manual Flash via ESP-IDF  
+For developers and advanced users:
+
+```bash
 idf.py set-target esp32s3
 idf.py build
 idf.py -p /dev/ttyUSB0 flash monitor
-Hold BOOT during power-up to enter download mode if needed.
-
-Option 2: Using the Spec Deck Companion App (Recommended)
-The Companion App includes a flashing tool with automatic USB port detection and firmware version selection.
-
-Connect the controller via USB-C
-
-Open the Companion App
-
-Go to Firmware > Flash Left Controller
-
-Select the version or upload a .bin
-
-Click Flash and wait for confirmation
-
-This method is beginner-friendly and includes error logs and update history.
-
-🛠️ Assembly Notes
-Secure PCB and battery inside the frame
-
-Connect hall triggers, rumble motor, and RGB LEDs if used
-
-Close shell and secure with M2 screws
-
-Connect via USB or pair via BLE
-
-🔋 Power Specs
-Battery: 1S 3.7 V Li-ion (JST-PH)
-
-Charging via USB-C up to 1 A
-
-Runtime and charge reporting over HID
-
-Fully usable while charging
