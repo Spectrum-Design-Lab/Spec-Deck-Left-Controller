@@ -1,96 +1,107 @@
-🕹️ Spec Deck – Left Controller
-Modular Gamepad | 3D Models + PCB + Firmware
+# 🕹️ Spec Deck – Left Controller  
+**Modular Gamepad | 3D Models + PCB + Firmware**
 
-This folder contains all the files for the Left Controller of the Spec Deck modular handheld, including:
+This folder contains all the files for the **Left Controller** of the Spec Deck modular handheld, including:
 
-🧩 3D-printable case and button files
+- 🧩 3D-printable case and button files  
+- 📐 PCB project in EasyEDA format + BOM  
+- 🔧 ESP32-S3 firmware source code under `Firmware/`
 
-📐 PCB schematic, layout, and BOM
+> 🚧 All folders currently contain **placeholder files**. Final files will be published at launch.  
+> 🔄 **File names and structure may change** before final release.
 
-🔧 ESP32-S3 firmware located under main/
+---
 
-📦 Folder Structure
-/3D Files/
-Printable case parts:
+## 📦 Folder Structure
 
+### `/3D Files/`  
+**Status: Placeholder**  
+Final folder will include:
 
-Optimized for FDM printing (PLA/PETG, 0.2 mm layer height, 0.15 mm tolerances).
+- `shell_top.stl` – Top enclosure shell  
+- `shell_bottom.stl` – Bottom shell with grip  
+- `dpad.stl` – Directional pad  
+- `trigger_l1.stl`, `trigger_l2.stl` – Shoulder and trigger parts  
+- `mount_frame.step` – Internal frame for PCB and battery
 
-/PCB Files/
-Hardware design files:
+Optimized for FDM 3D printing (PLA or PETG, 0.15–0.2 mm layers, ~0.2 mm tolerance).
 
+---
 
-The PCB includes:
+### `/PCB Files/`  
+**Status: Placeholder**  
+Final folder will include:
 
-ESP32-S3 module
+- `Spec Deck Left Controller.epro` – EasyEDA project file  
+- `bom.csv` – Bill of Materials with part numbers
 
-USB-C data and charging
+This board includes:
 
-BQ25302 charger
+- ESP32-S3 microcontroller  
+- USB-C for data + charging  
+- BQ25302 charger (1 A max input)  
+- JST battery connector  
+- Support for hall triggers, RGB LEDs, and rumble
 
-Hall-effect triggers
+> Gerber files will be exportable from the EasyEDA project after launch.
 
-JST battery input
+---
 
-Support for RGB LEDs and rumble
+### `/Firmware/`  
+**Status: Placeholder**  
+Final folder will include ESP32-S3 firmware source code (ESP-IDF based):
 
-/Firmware/
-Firmware source code for the ESP32-S3.
+- BLE + USB HID gamepad support  
+- Dock detection and auto-sync  
+- Battery monitoring and charging feedback  
+- Rumble motor and RGB LED control  
+- Configurable inputs (D-Pad, shoulder triggers, hall effects)
 
-Includes:
+---
 
-BLE + USB HID support
+## 🔧 Flashing Instructions
 
-Dock detection and auto pairing
+You can flash the controller firmware using:
 
-Battery monitoring and charging control
+### ✅ Option 1: Spec Deck Companion App (Recommended)  
+Use the built-in flashing window for simple updates:
 
-RGB LED and rumble motor support
+1. Connect the Left Controller via USB-C  
+2. Open the **Spec Deck Companion App**  
+3. Navigate to **Firmware > Flash Left Controller**  
+4. Choose a version from GitHub or upload a `.bin`  
+5. Click **Flash** – monitor the status and logs
 
-🔧 Flashing Instructions
-You can flash the firmware in two ways:
+---
 
-Option 1: Using ESP-IDF (Developer Mode)
-Make sure you have ESP-IDF v5.x installed.
-Run the following:
+### 🧪 Option 2: Manual Flash via ESP-IDF  
+For developers or advanced users:
 
-bash
-Copy
-Edit
+```bash
 idf.py set-target esp32s3
 idf.py build
 idf.py -p /dev/ttyUSB0 flash monitor
-Hold BOOT during power-up to enter download mode if needed.
+```
 
-Option 2: Using the Spec Deck Companion App (Recommended)
-The Companion App includes a flashing tool with automatic USB port detection and firmware version selection.
+## 🛠️ Assembly Instructions  
+📦 Full assembly guide will be released at launch.
 
-Connect the controller via USB-C
+**Basic overview:**
 
-Open the Companion App
+- 3D print the shell and internal frame parts  
+- Assemble the PCB using the provided BOM  
+- Connect JST battery, triggers, RGB LED, and rumble motor  
+- Flash the firmware before closing the case  
+- Mount everything into the internal frame and secure using M2 screws  
+- Test functionality via USB or BLE connection
 
-Go to Firmware > Flash Left Controller
+---
 
-Select the version or upload a .bin
+## 🔋 Power Specs
 
-Click Flash and wait for confirmation
+- **Battery:** 1S Li-ion (3.7 V nominal) with JST-PH connector  
+- **Charging:** USB-C via BQ25302, max 1 A input  
+- System is fully usable during charge  
+- Battery level and charge state reported via USB/BLE HID interface  
+- Rumble and LED draw powered from system 3.3 V rail
 
-This method is beginner-friendly and includes error logs and update history.
-
-🛠️ Assembly Notes
-Secure PCB and battery inside the frame
-
-Connect hall triggers, rumble motor, and RGB LEDs if used
-
-Close shell and secure with M2 screws
-
-Connect via USB or pair via BLE
-
-🔋 Power Specs
-Battery: 1S 3.7 V Li-ion (JST-PH)
-
-Charging via USB-C up to 1 A
-
-Runtime and charge reporting over HID
-
-Fully usable while charging
